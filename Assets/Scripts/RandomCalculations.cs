@@ -33,4 +33,9 @@ public class RandomCalculations : MonoBehaviour
         area = height * width;
         Debug.Log("Area is " + area);
     }
+
+    public void RandMethod()
+    {
+        area = height * width;
+    }
 }

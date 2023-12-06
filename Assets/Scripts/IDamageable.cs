@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyType
+public interface IDamageable
 {
-    Melee,
-    Shooter,
-    Exploder,
-    MachinGun,
-    Boss
+    void TakeDamage(float damage);
 }
