@@ -28,10 +28,15 @@ public class Bullet : MonoBehaviour
 
     void Damage(IDamageable damageable)
     {
+        Debug.Log("Attempting to damage something");
         if(damageable != null)
         {
             damageable.TakeDamage(damage);
             Debug.Log("Damaged something");
+            if (targetTag == "Enemy")
+            {
+                GameManager.GetInstance().scoreManager.IncrementScore();
+            }
             Destroy(gameObject);
         }
     }

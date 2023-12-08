@@ -10,16 +10,25 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthText.SetText($"{player.health.currentHealth}");
+
+        // Subscribe to the event
         player.OnHealthUpdate += UpdateHealth;
     }
 
     void OnDisable()
     {
+        // Unsubscribe from the event
         player.OnHealthUpdate -= UpdateHealth;    
     }
 
     void UpdateHealth(float currentHealth)
     {
-        healthText.SetText($"{currentHealth}");
+        healthText.SetText($"{Mathf.Floor(currentHealth)}");
+    }
+
+    public void UpdateScore()
+    {
+        scoreText.SetText(GameManager.GetInstance().scoreManager.GetScore().ToString());
     }
 }

@@ -56,7 +56,7 @@ public class MeleeEnemy : Enemy
         else
         {
             timer = 0f;
-            target.GetComponent<IDamageable>().TakeDamage(0);
+            target.GetComponent<IDamageable>().TakeDamage(weapon.GetDamage());
             Debug.Log("Enemy is attacking");
         }
     }

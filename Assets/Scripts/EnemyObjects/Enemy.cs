@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : PlayableObjects
@@ -10,7 +11,17 @@ public class Enemy : PlayableObjects
 
     protected virtual void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        try
+        {
+            target = GameObject.FindWithTag("Player").transform;
+        }
+        catch(NullReferenceException e)
+        {
+            Debug.Log("The target could not be found. Destroying self." + e.Message);
+            GameManager.GetInstance().isEnemySpawning = false;
+            Destroy(gameObject);
+            GameManager.GetInstance().enemyCount--;
+        }
     }
 
     protected virtual void Update()

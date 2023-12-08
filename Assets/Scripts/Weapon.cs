@@ -25,6 +25,12 @@ public class Weapon
         coolDownTime = 1f / RPS;
     }
 
+    public void PlayerShoot(float timeSinceLastShot, Bullet bullet, PlayableObjects player, string targetTag, float timeToDie = 5f)
+    {
+        coolDownTimer += timeSinceLastShot;
+        Shoot(bullet, player, targetTag, timeToDie);
+    }
+
     public void Shoot(Bullet bullet, PlayableObjects player, string targetTag, float timeToDie = 5f)
     {
         if (coolDownTimer < coolDownTime)

@@ -9,11 +9,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float enemySpawnRate = 5f;
     [SerializeField] int maxEnemyCount = 10;
 
+    [HideInInspector] public int enemyCount = 0;
+    [HideInInspector] public bool isEnemySpawning;
+
     GameObject tempEnemy;
-    bool isEnemySpawning;
     Weapon meleeWeapon = new Weapon("Melee", 1f, 0f);
-    public int enemyCount = 0;
+
     public static GameManager instance;
+    public ScoreManager scoreManager;
 
     public static GameManager GetInstance()
     {

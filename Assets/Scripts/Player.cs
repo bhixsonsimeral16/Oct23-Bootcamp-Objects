@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading;
 
 public class Player : PlayableObjects
 {
-    string nickName;
     [SerializeField] float speed;
     [SerializeField] Camera cam;
     [SerializeField] float weaponDamage = 1f;
@@ -13,6 +13,9 @@ public class Player : PlayableObjects
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] string targetTag = "Enemy";
+
+    string nickName;
+    float timeSinceLastShot;
 
     public Action<float> OnHealthUpdate;
 
@@ -23,12 +26,16 @@ public class Player : PlayableObjects
 
         weapon = new Weapon("Player Weapon", weaponDamage, weaponBulletSpeed);
 
+        timeSinceLastShot = 0;
+
         OnHealthUpdate?.Invoke(health.currentHealth);
     }
 
     void Update()
     {
         health.RegenHealth();
+        timeSinceLastShot += Time.deltaTime;
+        OnHealthUpdate?.Invoke(health.currentHealth);
     }
 
     public override void Move(Vector2 direction, Vector2 target)
@@ -46,7 +53,8 @@ public class Player : PlayableObjects
     public override void Shoot()
     {
         Debug.Log("Player is shooting");
-        weapon.Shoot(bulletPrefab, this, targetTag);
+        weapon.PlayerShoot(timeSinceLastShot, bulletPrefab, this, targetTag);
+        timeSinceLastShot = 0;
     }
 
     public override void Die()
