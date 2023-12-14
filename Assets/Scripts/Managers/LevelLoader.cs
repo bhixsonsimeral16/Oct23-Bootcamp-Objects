@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
-    RandomCalculations randomCalc;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +22,6 @@ public class LevelLoader : MonoBehaviour
         myPlayer.weapon = gun1;
         rangedEnemy.weapon = machineGun1;
         meleeEnemy.weapon = meleeWeapon1;
-
-        RandomCalculations.randNum = 10;
-        randomCalc.width = 10f;
-        RandomCalculations.CalculateRandomNumber();
     }
 
     // Update is called once per frame
