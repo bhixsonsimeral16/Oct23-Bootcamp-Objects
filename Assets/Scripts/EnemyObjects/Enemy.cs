@@ -69,7 +69,8 @@ public class Enemy : PlayableObjects
     public override void Die()
     {
         Debug.Log($"Enemy is dead");
-        GameManager.GetInstance().enemyCount--;
+        GameManager.GetInstance().NotifyEnemyDeath(this);
+
         Destroy(gameObject);
     }
 
@@ -80,6 +81,12 @@ public class Enemy : PlayableObjects
 
     public override void TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        GameManager.GetInstance().scoreManager.IncrementScore();
+
+        health.TakeDamage(damage);
+        if (health.currentHealth <= 0)
+        {
+            Die();
+        }
     }
 }

@@ -42,11 +42,6 @@ public class MeleeEnemy : Enemy
         }
     }
 
-    public override void BattleCry()
-    {
-        Debug.Log("Taste my blade!");
-    }
-
     public override void Attack(float interval)
     {
         if (timer <= interval)
@@ -63,10 +58,11 @@ public class MeleeEnemy : Enemy
 
     public override void TakeDamage(float damage)
     {
-        health.TakeDamage(damage);
-        if (health.currentHealth <= 0)
-        {
-            Die();
-        }
+        base.TakeDamage(damage);
+    }
+
+    public override void BattleCry()
+    {
+        Debug.Log("Taste my blade!");
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Health
 {
@@ -8,11 +9,14 @@ public class Health
     float maxHealth;
     float healthRegenRate;
     
+    public Action<float> OnHealthUpdate;
     public Health()
     {
         currentHealth = 100f;
         maxHealth = 100f;
         healthRegenRate = 1f;
+
+        OnHealthUpdate?.Invoke(currentHealth);
     }
 
     public Health(float maxHealth, float healthRegenRate)
@@ -20,6 +24,8 @@ public class Health
         this.maxHealth = maxHealth;
         currentHealth = maxHealth;
         this.healthRegenRate = healthRegenRate;
+
+        OnHealthUpdate?.Invoke(currentHealth);
     }
 
     public Health(float currentHealth, float maxHealth, float healthRegenRate)
@@ -27,6 +33,8 @@ public class Health
         this.currentHealth = currentHealth;
         this.maxHealth = maxHealth;
         this.healthRegenRate = healthRegenRate;
+
+        OnHealthUpdate?.Invoke(currentHealth);
     }
 
     public void Heal(float amount)
@@ -36,11 +44,13 @@ public class Health
         {
             currentHealth = maxHealth;
         }
+        OnHealthUpdate?.Invoke(currentHealth);
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Min(currentHealth - amount, currentHealth);
+        OnHealthUpdate?.Invoke(currentHealth);
     }
 
     // For use in Update()

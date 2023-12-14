@@ -8,15 +8,16 @@ public class PlayerInput : MonoBehaviour
     float horizontal, vertical;
     Vector2 lookTarget;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Player>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!GameManager.GetInstance().IsPlaying())
+            return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         lookTarget = Input.mousePosition;

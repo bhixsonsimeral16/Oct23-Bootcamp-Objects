@@ -5,21 +5,26 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text scoreText, healthText;
-    [SerializeField] Player player;
+    [Header("Gameplay")]
+    [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text healthText;
+    [SerializeField] TMP_Text highScoreText;
+
+    [Header("Menu")]
+    [SerializeField] GameObject menuCanvas;
+    [SerializeField] GameObject labelGameOver;
+    [SerializeField] TMP_Text textMenuHighScore;
+
+    Player player;
+    ScoreManager scoreManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        healthText.SetText($"{player.health.currentHealth}");
+        scoreManager = GameManager.GetInstance().scoreManager;
 
-        // Subscribe to the event
-        player.OnHealthUpdate += UpdateHealth;
-    }
-
-    void OnDisable()
-    {
-        // Unsubscribe from the event
-        player.OnHealthUpdate -= UpdateHealth;    
+        GameManager.GetInstance().OnGameStart += GameStarted;
+        GameManager.GetInstance().OnGameEnd += GameEnded;
     }
 
     void UpdateHealth(float currentHealth)
@@ -29,6 +34,26 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore()
     {
-        scoreText.SetText(GameManager.GetInstance().scoreManager.GetScore().ToString());
+        scoreText.SetText(scoreManager.GetScore().ToString());
+    }
+
+    public void UpdateHighScore()
+    {
+        highScoreText.SetText(scoreManager.GetHighScore().ToString());
+        textMenuHighScore.SetText($"High Score: {scoreManager.GetHighScore()}");
+    }
+
+    public void GameStarted()
+    {
+        player = GameManager.GetInstance().GetPlayer();
+        player.health.OnHealthUpdate += UpdateHealth;
+
+        menuCanvas.SetActive(false);
+    }
+
+    public void GameEnded()
+    {
+        menuCanvas.SetActive(true);
+        labelGameOver.SetActive(true);
     }
 }

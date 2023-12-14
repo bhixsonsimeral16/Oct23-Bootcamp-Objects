@@ -14,12 +14,14 @@ public class Player : PlayableObjects
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] string targetTag = "Enemy";
 
+    public Action OnDeath;
+
     string nickName;
     float timeSinceLastShot;
 
-    public Action<float> OnHealthUpdate;
+    //public Action<float> OnHealthUpdate;
 
-    void Start()
+    void Awake()
     {
         health = new Health(100f, 1f);
         playerRB = GetComponent<Rigidbody2D>();
@@ -28,14 +30,13 @@ public class Player : PlayableObjects
 
         timeSinceLastShot = 0;
 
-        OnHealthUpdate?.Invoke(health.currentHealth);
+        cam = Camera.main;
     }
 
     void Update()
     {
         health.RegenHealth();
         timeSinceLastShot += Time.deltaTime;
-        OnHealthUpdate?.Invoke(health.currentHealth);
     }
 
     public override void Move(Vector2 direction, Vector2 target)
@@ -61,6 +62,7 @@ public class Player : PlayableObjects
     {
         Debug.Log("Player is dead");
         Destroy(gameObject);
+        OnDeath?.Invoke();
     }
 
     public override void Attack(float interval)
@@ -73,7 +75,6 @@ public class Player : PlayableObjects
         Debug.Log("Player is taking damage");
         health.TakeDamage(damage);
 
-        OnHealthUpdate?.Invoke(health.currentHealth);
         if(health.currentHealth <= 0)
         {
             Die();
