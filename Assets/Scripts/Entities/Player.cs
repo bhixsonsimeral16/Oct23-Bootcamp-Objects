@@ -13,6 +13,7 @@ public class Player : PlayableObjects
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] string targetTag = "Enemy";
+    [SerializeField] GameObject outlineCircle;
 
     public Action OnDeath;
 
@@ -37,6 +38,8 @@ public class Player : PlayableObjects
     {
         health.RegenHealth();
         timeSinceLastShot += Time.deltaTime;
+
+        ChangeOutlineColor();
     }
 
     public override void Move(Vector2 direction, Vector2 target)
@@ -79,5 +82,12 @@ public class Player : PlayableObjects
         {
             Die();
         }
+    }
+
+    void ChangeOutlineColor()
+    {
+        // Ocilate the color of the outline circle in a rainbow pattern
+        var color = Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1);
+        outlineCircle.GetComponent<SpriteRenderer>().color = color;
     }
 }

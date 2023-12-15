@@ -255,7 +255,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &335158589
 GameObject:
@@ -618,7 +618,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &657366395
 GameObject:
@@ -781,7 +781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc7393a281453f43ad9c08c0ae387c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4018277590722864922, guid: 2e202575908dfb849aa90c01c96d45fa, type: 3}
   spawnPoints:
   - {fileID: 1320911886}
   - {fileID: 1799978100}
@@ -795,9 +794,18 @@ MonoBehaviour:
   - {fileID: 1765407669}
   - {fileID: 1196087813}
   - {fileID: 120679907}
-  enemySpawnRate: 5
+  enemySpawnRate: 4
   maxEnemyCount: 10
   playerPrefab: {fileID: 3092320644903624002, guid: fe209653b9cae70488e3e5d00c4d7763, type: 3}
+  enemyPrefabs:
+  - enemy: {fileID: 4115203307726115824, guid: 52a51f109fecab94089527ef0dea0f8a, type: 3}
+    spawnWeight: 2
+  - enemy: {fileID: 44010297756712925, guid: 0d154fd035860694b9a2891180b72618, type: 3}
+    spawnWeight: 3
+  - enemy: {fileID: 4018277590722864923, guid: 2e202575908dfb849aa90c01c96d45fa, type: 3}
+    spawnWeight: 4
+  - enemy: {fileID: 7006179194310155764, guid: 6d3c8fc0de8cf55458612317302f40d3, type: 3}
+    spawnWeight: 1
   enemyCount: 0
   isEnemySpawning: 0
   scoreManager: {fileID: 1209387613}
@@ -815,7 +823,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &752118137
 GameObject:
@@ -1769,7 +1777,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1320911884
 GameObject:
@@ -3227,7 +3235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3092320644903624003, guid: fe209653b9cae70488e3e5d00c4d7763, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3092320644903624003, guid: fe209653b9cae70488e3e5d00c4d7763, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3288,7 +3296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4018277590722864933, guid: 2e202575908dfb849aa90c01c96d45fa, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4018277590722864933, guid: 2e202575908dfb849aa90c01c96d45fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3349,7 +3357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7553274949688909905, guid: f9422f0cd9f24314a9e33598c902ba2c, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7553274949688909905, guid: f9422f0cd9f24314a9e33598c902ba2c, type: 3}
       propertyPath: m_LocalPosition.x

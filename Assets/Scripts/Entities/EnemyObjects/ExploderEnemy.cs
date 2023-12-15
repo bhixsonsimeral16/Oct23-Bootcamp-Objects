@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ExploderEnemy : Enemy
 {
-    [SerializeField] float attackRange = 0f;
+    [SerializeField] float attackRange = 0.1f;
     float setSpeed = 0f;
 
     public void SetExploderEnemy(float _attackRange)

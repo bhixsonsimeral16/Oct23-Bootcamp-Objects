@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] float enemySpawnRate = 5f;
     [SerializeField] int maxEnemyCount = 10;
     [SerializeField] GameObject playerPrefab;
+    [SerializeField] EnemySpawn[] enemyPrefabs;
+
 
     [HideInInspector] public int enemyCount = 0;
     [HideInInspector] public bool isEnemySpawning;
 
     GameObject tempEnemy;
-    Weapon meleeWeapon = new Weapon("Melee", 1f, 0f);
     Player player;
     bool isPlaying = false;
+    List<Enemy> enemyPool = new List<Enemy>();
 
     public Action OnGameStart;
     public Action OnGameEnd;
@@ -40,20 +41,22 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     FindPlayer();
-    //     isEnemySpawning = true;
-    //     StartCoroutine(SpawnEnemy());
-    // }
+    void Start()
+    {
+        for (int i = 0; i < enemyPrefabs.Length; i++)
+        {
+            for (int j = 0; j < enemyPrefabs[i].spawnWeight; j++)
+            {
+                enemyPool.Add(enemyPrefabs[i].enemy);
+            }
+        }
+    }
 
     void CreateEnemy()
     {
         int randomSpawnPointIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
-        tempEnemy = Instantiate(enemyPrefab, spawnPoints[randomSpawnPointIndex].position, Quaternion.identity);
-        tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
-        tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2f, 0.25f);
+        Enemy randomEnemy = enemyPool[UnityEngine.Random.Range(0, enemyPool.Count)];
+        tempEnemy = Instantiate(randomEnemy.gameObject, spawnPoints[randomSpawnPointIndex].position, Quaternion.identity);
     }
 
     void Update()
@@ -159,4 +162,12 @@ public class GameManager : MonoBehaviour
     //         Debug.Log("The player could not be found." + e.Message);
     //     }
     // }
+}
+
+[System.Serializable]
+
+public struct EnemySpawn
+{
+    public Enemy enemy;
+    public int spawnWeight;
 }

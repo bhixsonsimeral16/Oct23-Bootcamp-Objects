@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        menuCanvas.SetActive(true);
         scoreManager = GameManager.GetInstance().scoreManager;
 
         GameManager.GetInstance().OnGameStart += GameStarted;

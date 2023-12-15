@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float damage;
+    [SerializeField] GameObject outlineCircle;
 
     string targetTag;
 
@@ -19,6 +20,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         Move();
+        ChangeOutlineColor();
     }
 
     void Move()
@@ -49,5 +51,12 @@ public class Bullet : MonoBehaviour
         {
             Damage(collision.gameObject.GetComponent<IDamageable>());
         }
+    }
+
+    void ChangeOutlineColor()
+    {
+        // Ocilate the color of the outline circle in a rainbow pattern
+        var color = Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1);
+        outlineCircle.GetComponent<SpriteRenderer>().color = color;
     }
 }

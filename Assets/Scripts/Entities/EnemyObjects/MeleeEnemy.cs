@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    [SerializeField] float attackRange = 1f;
-    [SerializeField] float attackInterval = 0f;
+    [SerializeField] float attackRange = 2f;
+    [SerializeField] float attackInterval = 0.2f;
     float timer = 0f;
     float setSpeed = 0f;
 
@@ -20,6 +20,8 @@ public class MeleeEnemy : Enemy
         base.Start();
         health = new Health(1, 0, 1);
         setSpeed = speed;
+
+        weapon = new Weapon("Melee", 1f, 0f);
     }
 
     protected override void Update()
