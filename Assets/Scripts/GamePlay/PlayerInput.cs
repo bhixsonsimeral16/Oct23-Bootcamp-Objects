@@ -26,6 +26,11 @@ public class PlayerInput : MonoBehaviour
         {
             player.Shoot();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            player.UseNuke();
+        }
     }
 
     private void FixedUpdate()

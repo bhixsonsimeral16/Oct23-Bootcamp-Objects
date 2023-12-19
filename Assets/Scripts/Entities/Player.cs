@@ -19,6 +19,7 @@ public class Player : PlayableObjects
 
     string nickName;
     float timeSinceLastShot;
+    int nukeCounter = 0;
 
     //public Action<float> OnHealthUpdate;
 
@@ -89,5 +90,21 @@ public class Player : PlayableObjects
         // Ocilate the color of the outline circle in a rainbow pattern
         var color = Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1);
         outlineCircle.GetComponent<SpriteRenderer>().color = color;
+    }
+
+    public void AddNuke()
+    {
+        nukeCounter ++;
+    }
+
+    public void UseNuke()
+    {
+        if(nukeCounter > 0)
+        {
+            nukeCounter--;
+            // TODO: Implement nuke
+            // Animation?
+            GameManager.GetInstance().NotifyNukeUse();
+        }
     }
 }

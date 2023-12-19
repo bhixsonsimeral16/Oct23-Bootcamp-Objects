@@ -90,6 +90,19 @@ public class GameManager : MonoBehaviour
         enemyCount--;
     }
 
+    public void NotifyNukeUse()
+    {
+        foreach (Enemy enemy in FindObjectsOfType(typeof(Enemy)))
+        {
+            enemy.Die();
+        }
+
+        foreach (Bullet bullet in FindObjectsOfType(typeof(Bullet)))
+        {
+            Destroy(bullet.gameObject);
+        }
+    }
+
     public Player GetPlayer()
     {
         return player;
