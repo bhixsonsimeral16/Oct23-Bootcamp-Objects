@@ -20,6 +20,10 @@ public class Player : PlayableObjects
     string nickName;
     float timeSinceLastShot;
     int nukeCounter = 0;
+    float rapidFireTimer = 0f;
+    float fireRateMultiplier = 1f;
+
+    public Action<int> OnNukeUpdate;
 
     //public Action<float> OnHealthUpdate;
 
@@ -39,6 +43,14 @@ public class Player : PlayableObjects
     {
         health.RegenHealth();
         timeSinceLastShot += Time.deltaTime;
+        rapidFireTimer -= Time.deltaTime;
+        if (rapidFireTimer <= 0)
+        {
+            rapidFireTimer = 0;
+            // Return fire rate to normal
+            weapon.RPS /= fireRateMultiplier;
+            fireRateMultiplier = 1f;
+        }
 
         ChangeOutlineColor();
     }
@@ -94,7 +106,9 @@ public class Player : PlayableObjects
 
     public void AddNuke()
     {
-        nukeCounter ++;
+        nukeCounter++;
+
+        OnNukeUpdate?.Invoke(nukeCounter);
     }
 
     public void UseNuke()
@@ -102,9 +116,19 @@ public class Player : PlayableObjects
         if(nukeCounter > 0)
         {
             nukeCounter--;
-            // TODO: Implement nuke
-            // Animation?
+            // TODO: Animation?
             GameManager.GetInstance().NotifyNukeUse();
+            OnNukeUpdate?.Invoke(nukeCounter);
         }
+    }
+
+    public void ActivateRapidFire(float fireRateMultiplier, float duration)
+    {
+        rapidFireTimer = duration;
+
+        // Return fire rate to normal before applying new multiplier
+        weapon.RPS /= this.fireRateMultiplier;
+        this.fireRateMultiplier = fireRateMultiplier;
+        weapon.RPS *= fireRateMultiplier;
     }
 }

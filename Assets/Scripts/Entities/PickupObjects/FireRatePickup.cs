@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FireRatePickup : Pickup, IDamageable
 {
+    [SerializeField] float fireRateIncrease = 0.1f;
+    [SerializeField] float fireRateDuration = 5f;
+
     public override void OnPickedUp()
     {
-        // TODO: Implement increased fire rate
-        
-        GameManager.GetInstance().GetPlayer();
+        GameManager.GetInstance().GetPlayer().ActivateRapidFire(fireRateIncrease, fireRateDuration);
         base.OnPickedUp();
     }
 

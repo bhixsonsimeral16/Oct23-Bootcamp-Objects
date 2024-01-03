@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text highScoreText;
+    [SerializeField] TMP_Text nukeCountText;
 
     [Header("Menu")]
     [SerializeField] GameObject menuCanvas;
@@ -44,10 +45,17 @@ public class UIManager : MonoBehaviour
         textMenuHighScore.SetText($"High Score: {scoreManager.GetHighScore()}");
     }
 
+    void UpdateNukeCount(int nukeCount)
+    {
+        nukeCountText.SetText(nukeCount.ToString());
+    }
+
     public void GameStarted()
     {
         player = GameManager.GetInstance().GetPlayer();
         player.health.OnHealthUpdate += UpdateHealth;
+        player.OnNukeUpdate += UpdateNukeCount;
+
 
         menuCanvas.SetActive(false);
     }

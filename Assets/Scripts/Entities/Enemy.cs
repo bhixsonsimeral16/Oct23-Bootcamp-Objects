@@ -38,7 +38,7 @@ public class Enemy : PlayableObjects
 
     public override void Move(Vector2 direction, Vector2 target)
     {
-        Debug.Log("Enemy is moving");
+        // Debug.Log("Enemy is moving");
     }
 
     public override void Move(float speed)
@@ -58,17 +58,17 @@ public class Enemy : PlayableObjects
     }
     public override void Shoot()
     {
-        Debug.Log("Enemy is shooting");
+        // Debug.Log("Enemy is shooting");
     }
 
     public override void Attack(float interval)
     {
-        Debug.Log("Enemy is attacking");
+        // Debug.Log("Enemy is attacking");
     }
 
     public override void Die()
     {
-        Debug.Log($"Enemy is dead");
+        // Debug.Log($"Enemy is dead");
         GameManager.GetInstance().NotifyEnemyDeath(this);
 
         Destroy(gameObject);
@@ -76,7 +76,7 @@ public class Enemy : PlayableObjects
 
     public virtual void BattleCry()
     {
-        Debug.Log($"Enemy is shouting");
+        // Debug.Log($"Enemy is shouting");
     }
 
     public override void TakeDamage(float damage)
