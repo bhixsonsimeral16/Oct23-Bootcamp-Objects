@@ -14,6 +14,8 @@ public class Player : PlayableObjects
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] string targetTag = "Enemy";
     [SerializeField] GameObject outlineCircle;
+    // [SerializeField] GameObject rapidFireCircle;
+    [SerializeField] Animator playerAnimator;
 
     public Action OnDeath;
 
@@ -21,6 +23,7 @@ public class Player : PlayableObjects
     float timeSinceLastShot;
     int nukeCounter = 0;
     float rapidFireTimer = 0f;
+    float rapidFireTimerMax = 0f;
     float fireRateMultiplier = 1f;
 
     public Action<int> OnNukeUpdate;
@@ -43,13 +46,14 @@ public class Player : PlayableObjects
     {
         health.RegenHealth();
         timeSinceLastShot += Time.deltaTime;
-        rapidFireTimer -= Time.deltaTime;
+        if (rapidFireTimer > 0)
+        {
+            rapidFireTimer -= Time.deltaTime;
+        }
+
         if (rapidFireTimer <= 0)
         {
-            rapidFireTimer = 0;
-            // Return fire rate to normal
-            weapon.RPS /= fireRateMultiplier;
-            fireRateMultiplier = 1f;
+            DeactivateRapidFire();
         }
 
         ChangeOutlineColor();
@@ -69,7 +73,7 @@ public class Player : PlayableObjects
 
     public override void Shoot()
     {
-        Debug.Log("Player is shooting");
+        // Debug.Log("Player is shooting");
         weapon.PlayerShoot(timeSinceLastShot, bulletPrefab, this, targetTag);
         timeSinceLastShot = 0;
     }
@@ -88,7 +92,7 @@ public class Player : PlayableObjects
 
     public override void TakeDamage(float damage)
     {
-        Debug.Log("Player is taking damage");
+        // Debug.Log("Player is taking damage");
         health.TakeDamage(damage);
 
         if(health.currentHealth <= 0)
@@ -125,10 +129,26 @@ public class Player : PlayableObjects
     public void ActivateRapidFire(float fireRateMultiplier, float duration)
     {
         rapidFireTimer = duration;
+        rapidFireTimerMax = duration;
 
         // Return fire rate to normal before applying new multiplier
         weapon.RPS /= this.fireRateMultiplier;
         this.fireRateMultiplier = fireRateMultiplier;
         weapon.RPS *= fireRateMultiplier;
+
+        Debug.Log($"Rapid fire activated for {duration} seconds");
+        playerAnimator.SetTrigger("rapidFireActivated");
+        playerAnimator.SetBool("rapidFireActive", true);
+    }
+
+    void DeactivateRapidFire()
+    {
+        Debug.Log($"Rapid fire deactivated");
+        rapidFireTimer = 0;
+        // Return fire rate to normal
+        weapon.RPS /= fireRateMultiplier;
+        fireRateMultiplier = 1f;
+        playerAnimator.ResetTrigger("rapidFireActivated");
+        playerAnimator.SetBool("rapidFireActive", false);
     }
 }

@@ -50,7 +50,7 @@ public class SniperEnemy : Enemy
     public override void Attack(float interval = 0f)
     {
         weapon.Shoot(bulletPrefab, this, targetTag, accuracy);
-        Debug.Log("Enemy is attacking");
+        // Debug.Log("Enemy is attacking");
     }
 
     public override void TakeDamage(float damage)

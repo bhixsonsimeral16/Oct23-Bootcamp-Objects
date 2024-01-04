@@ -44,7 +44,7 @@ public class ExploderEnemy : Enemy
     public override void Attack(float interval = 0f)
     {
         target.GetComponent<IDamageable>().TakeDamage(weapon.GetDamage());
-        Debug.Log("Enemy is attacking");
+        // Debug.Log("Enemy is attacking");
         // TODO: Trigger explosion animation?
         Die();
     }
