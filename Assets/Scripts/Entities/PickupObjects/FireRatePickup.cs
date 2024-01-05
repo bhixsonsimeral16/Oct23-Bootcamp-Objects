@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class FireRatePickup : Pickup, IDamageable
 {
-    [SerializeField] float fireRateIncrease = 0.1f;
-    [SerializeField] float fireRateDuration = 5f;
+    [SerializeField] float fireRateIncrease = 1f;
+    // I currently have the duration of an animation at 5 seconds and it is not
+    // directly connected to the fire rate duration. From my reseach I found that
+    // I can't use animator if I want a variable duration.
+    float fireRateDuration = 5f;
 
     public override void OnPickedUp()
     {

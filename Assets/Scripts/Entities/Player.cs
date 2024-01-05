@@ -42,6 +42,10 @@ public class Player : PlayableObjects
         cam = Camera.main;
     }
 
+    void Start()
+    {
+        OnNukeUpdate?.Invoke(nukeCounter);
+    }
     void Update()
     {
         health.RegenHealth();
@@ -129,7 +133,6 @@ public class Player : PlayableObjects
     public void ActivateRapidFire(float fireRateMultiplier, float duration)
     {
         rapidFireTimer = duration;
-        rapidFireTimerMax = duration;
 
         // Return fire rate to normal before applying new multiplier
         weapon.RPS /= this.fireRateMultiplier;
