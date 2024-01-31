@@ -11,7 +11,7 @@ public class Weapon
 
     public float bulletSpeed;
     public float damage;
-    public float RPS = 4;
+    public float RPS {get; private set;} = 4f;
     public float accuracy = 1f;
 
     public Weapon()
@@ -62,7 +62,6 @@ public class Weapon
         float bulletTransformRotation = Random.Range(-accuracyArcMax + (accuracy * accuracyArcMax),  accuracyArcMax - (accuracy * accuracyArcMax));
 
         coolDownTimer = 0f;
-        Debug.Log("Weapon is shooting");
         Bullet bulletObj = GameObject.Instantiate(bullet, player.transform.position, player.transform.rotation);
         bulletObj.transform.Rotate(0, 0, bulletTransformRotation);
         bulletObj.SetBullet(damage, targetTag, bulletSpeed);
@@ -74,5 +73,11 @@ public class Weapon
     public float GetDamage()
     {
         return damage;
+    }
+
+    public void SetRPS(float _RPS)
+    {
+        RPS = _RPS;
+        coolDownTime = 1f / RPS;
     }
 }

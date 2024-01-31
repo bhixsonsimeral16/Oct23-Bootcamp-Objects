@@ -16,14 +16,13 @@ public class Player : PlayableObjects
     [SerializeField] GameObject outlineCircle;
     // [SerializeField] GameObject rapidFireCircle;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] ParticleSystem nukeParticles;
 
     public Action OnDeath;
 
-    string nickName;
     float timeSinceLastShot;
-    int nukeCounter = 0;
+    int nukeCounter = 1;
     float rapidFireTimer = 0f;
-    float rapidFireTimerMax = 0f;
     float fireRateMultiplier = 1f;
 
     public Action<int> OnNukeUpdate;
@@ -55,7 +54,7 @@ public class Player : PlayableObjects
             rapidFireTimer -= Time.deltaTime;
         }
 
-        if (rapidFireTimer <= 0)
+        if (rapidFireTimer < 0)
         {
             DeactivateRapidFire();
         }
@@ -124,7 +123,8 @@ public class Player : PlayableObjects
         if(nukeCounter > 0)
         {
             nukeCounter--;
-            // TODO: Animation?
+            ParticleSystem nukeInstance = Instantiate(nukeParticles, transform.position, Quaternion.identity);
+            nukeInstance.Play();
             GameManager.GetInstance().NotifyNukeUse();
             OnNukeUpdate?.Invoke(nukeCounter);
         }
@@ -132,25 +132,28 @@ public class Player : PlayableObjects
 
     public void ActivateRapidFire(float fireRateMultiplier, float duration)
     {
+        if (rapidFireTimer > 0)
+        {
+            DeactivateRapidFire();
+            playerAnimator.Play("RapidFireActivation", -1, 0f);
+        }
+
         rapidFireTimer = duration;
 
-        // Return fire rate to normal before applying new multiplier
-        weapon.RPS /= this.fireRateMultiplier;
         this.fireRateMultiplier = fireRateMultiplier;
-        weapon.RPS *= fireRateMultiplier;
+        weapon.SetRPS (weapon.RPS * fireRateMultiplier);
 
-        Debug.Log($"Rapid fire activated for {duration} seconds");
         playerAnimator.SetTrigger("rapidFireActivated");
         playerAnimator.SetBool("rapidFireActive", true);
     }
 
     void DeactivateRapidFire()
     {
-        Debug.Log($"Rapid fire deactivated");
+
         rapidFireTimer = 0;
         // Return fire rate to normal
-        weapon.RPS /= fireRateMultiplier;
-        fireRateMultiplier = 1f;
+        weapon.SetRPS (weapon.RPS / this.fireRateMultiplier);
+        this.fireRateMultiplier = 1f;
         playerAnimator.ResetTrigger("rapidFireActivated");
         playerAnimator.SetBool("rapidFireActive", false);
     }

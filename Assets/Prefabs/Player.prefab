@@ -313,6 +313,7 @@ MonoBehaviour:
   targetTag: Enemy
   outlineCircle: {fileID: 450306528959896390}
   playerAnimator: {fileID: 2484662294026200161}
+  nukeParticles: {fileID: 6097095001007482905, guid: 1920cdd2f1fd1264f9ad03adc453a9bf, type: 3}
 --- !u!114 &3092320644903624062
 MonoBehaviour:
   m_ObjectHideFlags: 0
